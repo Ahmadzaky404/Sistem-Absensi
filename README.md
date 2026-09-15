@@ -11,7 +11,7 @@ Aplikasi Manajemen dan Sistem Absensi Karyawan berbasis Laravel dengan dukungan 
 - **Rekap & Ekspor Laporan**: Unduh laporan kehadiran dalam format Excel dan cetak PDF.
 
 ## Persyaratan Sistem
-- PHP >= 8.2
+- PHP >= 8.3
 - Composer
 - Node.js & NPM
 - Database MySQL / MariaDB
