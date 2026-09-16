@@ -89,7 +89,7 @@
                             <td>
                                 @php
                                     $badge = match ($absensi->status) {
-                                        'Hadir Lengkap' => 'text-bg-success',
+                                        'Hadir', 'Hadir Lengkap' => 'text-bg-success',
                                         'Terlambat' => 'text-bg-danger',
                                         'Belum Pulang' => 'text-bg-warning',
                                         default => 'text-bg-secondary',

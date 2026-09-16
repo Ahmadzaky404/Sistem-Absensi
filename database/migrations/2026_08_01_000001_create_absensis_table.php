@@ -14,7 +14,7 @@ return new class extends Migration
             $table->date('tanggal');
             $table->time('jam_masuk')->nullable();
             $table->time('jam_pulang')->nullable();
-            $table->enum('status', ['Belum Pulang', 'Hadir Lengkap', 'Terlambat'])->default('Belum Pulang');
+            $table->enum('status', ['Hadir', 'Terlambat', 'Izin', 'Sakit', 'Dinas Luar', 'Belum Pulang', 'Hadir Lengkap'])->default('Hadir');
             $table->timestamps();
 
             $table->unique(['user_id', 'tanggal']);
