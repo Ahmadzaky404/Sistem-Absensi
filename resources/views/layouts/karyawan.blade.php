@@ -239,6 +239,7 @@
         }
     </style>
     @include('layouts.partials.responsive-global')
+    @include('layouts.partials.pwa')
     @include('layouts.partials.notification-icons')
     @stack('styles')
 </head>
@@ -263,31 +264,36 @@
         <div class="collapse navbar-collapse" id="karyawanNavbar">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs($dashboardRoute) ? 'active' : '' }}" href="{{ route($dashboardRoute) }}">Dashboard</a>
+                    <a class="nav-link {{ request()->routeIs($dashboardRoute) ? 'active' : '' }}" href="{{ route($dashboardRoute) }}">
+                        <i class="fa-solid fa-house me-2 text-primary"></i>Dashboard
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('karyawan.riwayat') ? 'active' : '' }}" href="{{ route('karyawan.riwayat') }}">Riwayat Absensi</a>
+                    <a class="nav-link {{ request()->routeIs('karyawan.riwayat') ? 'active' : '' }}" href="{{ route('karyawan.riwayat') }}">
+                        <i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i>Riwayat Absensi
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <span class="nav-link">{{ auth()->user()->nama ?? auth()->user()->username }}</span>
-                </li>
-                <li class="nav-item">
-                    <span class="profile-avatar" aria-label="Foto Profil">
-                        <i class="fa-solid fa-user"></i>
+                <li class="nav-item nav-item-profile">
+                    <span class="admin-profile">
+                        <span class="admin-profile-icon profile-avatar" aria-label="Foto Profil">
+                            <i class="fa-solid fa-user"></i>
+                        </span>
+                        <span>{{ auth()->user()->nama ?? auth()->user()->username }}</span>
                     </span>
                 </li>
-                <li class="nav-item">
-                    <button type="button" class="btn btn-outline-secondary btn-sm theme-toggle" data-theme-toggle aria-label="Aktifkan mode gelap" title="Mode gelap">
-                        <i class="fa-solid fa-moon" aria-hidden="true"></i>
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-primary btn-sm">
-                            <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
+                <li class="nav-item nav-item-actions">
+                    <div class="navbar-action-buttons">
+                        <button type="button" class="btn btn-outline-secondary theme-toggle" data-theme-toggle aria-label="Aktifkan mode gelap" title="Mode gelap">
+                            <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                            <span class="theme-label d-lg-none ms-2">Mode Gelap</span>
                         </button>
-                    </form>
+                        <form method="POST" action="{{ route('logout') }}" class="m-0 p-0 flex-grow-1 flex-lg-grow-0">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-danger btn-sm logout-btn">
+                                <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
+                            </button>
+                        </form>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -309,7 +315,14 @@
             const dark = theme === 'dark';
             button.setAttribute('aria-label', dark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap');
             button.setAttribute('title', dark ? 'Mode terang' : 'Mode gelap');
-            button.querySelector('i').className = `fa-solid fa-${dark ? 'sun' : 'moon'}`;
+            const icon = button.querySelector('i');
+            if (icon) {
+                icon.className = `fa-solid fa-${dark ? 'sun' : 'moon'}`;
+            }
+            const label = button.querySelector('.theme-label');
+            if (label) {
+                label.textContent = dark ? 'Mode Terang' : 'Mode Gelap';
+            }
         });
     };
 

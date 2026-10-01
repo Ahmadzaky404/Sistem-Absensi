@@ -279,6 +279,7 @@
     </style>
 
     @include('layouts.partials.responsive-global')
+    @include('layouts.partials.pwa')
     @include('layouts.partials.notification-icons')
     @stack('styles')
 </head>
@@ -295,18 +296,26 @@
         <div class="collapse navbar-collapse" id="adminNavbar">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                    <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+                        <i class="fa-solid fa-gauge me-2 text-primary"></i>Dashboard
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.karyawan.*') ? 'active' : '' }}" href="{{ route('admin.karyawan.index') }}">Kelola Karyawan</a>
+                    <a class="nav-link {{ request()->routeIs('admin.karyawan.*') ? 'active' : '' }}" href="{{ route('admin.karyawan.index') }}">
+                        <i class="fa-solid fa-users me-2 text-primary"></i>Kelola Karyawan
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.lokasi-absen.*') ? 'active' : '' }}" href="{{ route('admin.lokasi-absen.index') }}">Lokasi Absen</a>
+                    <a class="nav-link {{ request()->routeIs('admin.lokasi-absen.*') ? 'active' : '' }}" href="{{ route('admin.lokasi-absen.index') }}">
+                        <i class="fa-solid fa-location-dot me-2 text-primary"></i>Lokasi Absen
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.laporan.*') ? 'active' : '' }}" href="{{ route('admin.laporan.index') }}">Laporan</a>
+                    <a class="nav-link {{ request()->routeIs('admin.laporan.*') ? 'active' : '' }}" href="{{ route('admin.laporan.index') }}">
+                        <i class="fa-solid fa-file-invoice me-2 text-primary"></i>Laporan
+                    </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item nav-item-profile">
                     <span class="admin-profile">
                         <span class="admin-profile-icon" aria-hidden="true">
                             <i class="fa-solid fa-user"></i>
@@ -314,18 +323,19 @@
                         <span>{{ auth()->user()->nama ?? auth()->user()->username ?? 'Admin' }}</span>
                     </span>
                 </li>
-                <li class="nav-item">
-                    <button type="button" class="btn btn-outline-secondary btn-sm theme-toggle" data-theme-toggle aria-label="Aktifkan mode gelap" title="Mode gelap">
-                        <i class="fa-solid fa-moon" aria-hidden="true"></i>
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-primary btn-sm">
-                            <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
+                <li class="nav-item nav-item-actions">
+                    <div class="navbar-action-buttons">
+                        <button type="button" class="btn btn-outline-secondary theme-toggle" data-theme-toggle aria-label="Aktifkan mode gelap" title="Mode gelap">
+                            <i class="fa-solid fa-moon" aria-hidden="true"></i>
+                            <span class="theme-label d-lg-none ms-2">Mode Gelap</span>
                         </button>
-                    </form>
+                        <form method="POST" action="{{ route('logout') }}" class="m-0 p-0 flex-grow-1 flex-lg-grow-0">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-danger btn-sm logout-btn">
+                                <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
+                            </button>
+                        </form>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -347,7 +357,14 @@
             const dark = theme === 'dark';
             button.setAttribute('aria-label', dark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap');
             button.setAttribute('title', dark ? 'Mode terang' : 'Mode gelap');
-            button.querySelector('i').className = `fa-solid fa-${dark ? 'sun' : 'moon'}`;
+            const icon = button.querySelector('i');
+            if (icon) {
+                icon.className = `fa-solid fa-${dark ? 'sun' : 'moon'}`;
+            }
+            const label = button.querySelector('.theme-label');
+            if (label) {
+                label.textContent = dark ? 'Mode Terang' : 'Mode Gelap';
+            }
         });
     };
 
